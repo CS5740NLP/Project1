@@ -13,7 +13,7 @@ End_token = "</e>"
 truncation = ["...", ":", ";", ".", "!", "?", "!?", "?!"]
 conjunction = ["--", "-", ',']
 
-content = []
+
 
 def helper(lines):
 	sentence = ""
@@ -56,8 +56,6 @@ def breakAndinsertToken(line):
 			else:
 				lines.append(line[j])
 
-	# for i in data:
-	# 	print(i)
 	content.extend(data)
 
 def remove_quote(line):
@@ -101,18 +99,20 @@ def remove_quote(line):
 	breakAndinsertToken(lines)
 
 def processing():
-	with open('SentimentDataset/Train/%s' % tag, 'r') as f:
+	with open('SentimentDataset/Train/%s.txt' % tag, 'r') as f:
 		pos_data = f.readlines()
 	
 	for line in pos_data:
-		# print("the original: ", line[:-1]) 
 		remove_quote(line[:-1]) # line[:-1] for removing the end '\n' symbol
 		# print()
+	with open('%s_pre.txt' % tag, 'w') as f:
+		for line in content:
+			f.writelines(line + "\n")
 
+content = []
 tag = sys.argv[1]
 processing()
-with open('%s_pre.txt' % tag[:3], 'w') as f:
-	for line in content:
-		f.writelines(line + "\n")
+
+
 
 
