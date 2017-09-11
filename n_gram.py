@@ -64,7 +64,7 @@ def sentence_generator(uni_word,uni_prob,bi_word,bi_prob,model='uni',num=2, give
                 prob = np.array(uni_prob)
                 word = np.random.choice(sample,p=prob)
                 sentence = sentence+' '+word if word!='</e>'else sentence
-            print (str)(i+1) + '. ' + sentence.replace('</e>','').replace('</e> ','') + '\n'
+            print (str)(i+1) + '. ' + sentence.replace('</e>','').replace('</s> ','') + '\n'
     
     elif model=='bi':
         print 'Bigram sentence generator: %i sentences' %num
