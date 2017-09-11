@@ -13,6 +13,8 @@ End_token = "</e>"
 truncation = ["...", ":", ";", ".", "!", "?", "!?", "?!"]
 conjunction = ["--", "-", ',']
 
+content = []
+
 def helper(lines):
 	sentence = ""
 	for i in range(len(lines)):
@@ -54,8 +56,9 @@ def breakAndinsertToken(line):
 			else:
 				lines.append(line[j])
 
-	for i in data:
-		print(i)
+	# for i in data:
+	# 	print(i)
+	content.extend(data)
 
 def remove_quote(line):
 	lines = []
@@ -108,6 +111,8 @@ def processing():
 
 tag = sys.argv[1]
 processing()
-
+with open('%s_pre.txt' % tag[:3], 'w') as f:
+	for line in content:
+		f.writelines(line + "\n")
 
 

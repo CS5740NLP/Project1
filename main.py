@@ -4,7 +4,7 @@ import sys
 from n_gram import *
 
 if __name__ ==  '__main__':
-
+    
     txt = sys.argv[1]
     # read the file
     with open('%s' % txt,'r') as file:
