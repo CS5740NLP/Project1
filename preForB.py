@@ -61,7 +61,7 @@ def breakAndinsertToken(line):
 def remove_quote(line):
 	lines = []
 	arr = line.split(' ')
-
+    
 	is_quote_1 = False # for single quote ` '
 	is_quote_2 = False # for double quote `` ''
 
@@ -95,8 +95,9 @@ def remove_quote(line):
 		lines.insert(temp_1, value_1)
 	if is_quote_2:
 		lines.insert(temp_2, value_2)
-	
-	breakAndinsertToken(lines)
+	lines.insert(0, Start_token)
+	lines.append(End_token)
+	content.append(' '.join(lines))
 
 def processing():
 	with open('SentimentDataset/Train/%s.txt' % tag, 'r') as f:
@@ -105,6 +106,7 @@ def processing():
 	for line in pos_data:
 		remove_quote(line[:-1]) # line[:-1] for removing the end '\n' symbol
 		# print()
+#	print(content)
 	with open('%s_pre.txt' % tag, 'w') as f:
 		for line in content:
 			f.writelines(line + "\n")
