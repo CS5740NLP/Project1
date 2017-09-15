@@ -58,60 +58,102 @@ def breakAndinsertToken(line):
 
 	content.extend(data)
 
-def remove_quote(line):
-	lines = []
-	arr = line.split(' ')
-    
-	is_quote_1 = False # for single quote ` '
-	is_quote_2 = False # for double quote `` ''
+# def remove_quote(line):
+# 	lines = []
+# 	arr = line.split(' ')
+# 	is_quote_1 = False # for single quote ` '
+# 	is_quote_2 = False # for double quote `` ''
 
-	for j in range(len(arr)):
-		# deal with case e.g. she said: ' I 'm coming . '
-		# strong punctuation shows before quote 
-		if j is len(arr)-1 and arr[j] == "'" and is_quote_1:
-			is_quote_1 = False
-			break
-		elif j is len(arr)-1 and arr[j] == "''" and is_quote_2:
-			is_quote_2 = False
-			break
+# 	for j in range(len(arr)):
+# 		# deal with case e.g. she said: ' I 'm coming . '
+# 		# strong punctuation shows before quote 
+# 		if j is len(arr)-1 and arr[j] == "'" and is_quote_1:
+# 			is_quote_1 = False
+# 			break
+# 		elif j is len(arr)-1 and arr[j] == "''" and is_quote_2:
+# 			is_quote_2 = False
+# 			break
 
-		elif not is_quote_1 and (arr[j] == '`' or arr[j] == "'"):
-			temp_1 = len(lines)
-			value_1 = arr[j]
-			is_quote_1 = True
-		elif arr[j] == "'" and is_quote_1:
-			is_quote_1 = False
-		elif not is_quote_2 and (arr[j] == "``" or arr[j] == "''"):
-			temp_2 = len(lines)
-			value_2 = arr[j]
-			is_quote_2 = True
-		elif arr[j] == "''" and is_quote_2:
-			is_quote_2 = False
+# 		elif not is_quote_1 and (arr[j] == '`' or arr[j] == "'"):
+# 			temp_1 = len(lines)
+# 			value_1 = arr[j]
+# 			is_quote_1 = True
+# 		elif arr[j] == "'" and is_quote_1:
+# 			is_quote_1 = False
+# 		elif not is_quote_2 and (arr[j] == "``" or arr[j] == "''"):
+# 			temp_2 = len(lines)
+# 			value_2 = arr[j]
+# 			is_quote_2 = True
+# 		elif arr[j] == "''" and is_quote_2:
+# 			is_quote_2 = False
 		
-		else:
-			lines.append(arr[j])
+# 		else:
+# 			lines.append(arr[j])
 	
-	if is_quote_1:
-		lines.insert(temp_1, value_1)
-	if is_quote_2:
-		lines.insert(temp_2, value_2)
-	lines.insert(0, Start_token)
-	lines.append(End_token)
-	content.append(' '.join(lines))
+# 	if is_quote_1:
+# 		lines.insert(temp_1, value_1)
+# 	if is_quote_2:
+# 		lines.insert(temp_2, value_2)
+# 	lines.insert(0, Start_token)
+# 	lines.append(End_token)
+# 	content.append(' '.join(lines))
+
+def remove_quote(pos_data):
+	content = []
+	for line in pos_data:
+		line = line[:-1]
+		lines = []
+		arr = line.split(' ')
+		is_quote_1 = False # for single quote ` '
+		is_quote_2 = False # for double quote `` ''
+
+		for j in range(len(arr)):
+			# deal with case e.g. she said: ' I 'm coming . '
+			# strong punctuation shows before quote 
+			if j is len(arr)-1 and arr[j] == "'" and is_quote_1:
+				is_quote_1 = False
+				break
+			elif j is len(arr)-1 and arr[j] == "''" and is_quote_2:
+				is_quote_2 = False
+				break
+			elif j is len(arr)-1 and arr[j] == "'":
+				break
+			elif not is_quote_1 and (arr[j] == '`' or arr[j] == "'"):
+				temp_1 = len(lines)
+				value_1 = arr[j]
+				is_quote_1 = True
+			elif arr[j] == "'" and is_quote_1:
+				is_quote_1 = False
+			elif not is_quote_2 and (arr[j] == "``" or arr[j] == "''"):
+				temp_2 = len(lines)
+				value_2 = arr[j]
+				is_quote_2 = True
+			elif arr[j] == "''" and is_quote_2:
+				is_quote_2 = False
+			
+			else:
+				lines.append(arr[j])
+		
+		if is_quote_1:
+			lines.insert(temp_1, value_1)
+		if is_quote_2:
+			lines.insert(temp_2, value_2)
+		lines.insert(0, Start_token)
+		lines.append(End_token)
+		content.append(' '.join(lines))
+	return content
+
 
 def processing():
 	with open('SentimentDataset/Train/%s.txt' % tag, 'r') as f:
 		pos_data = f.readlines()
-	
-	for line in pos_data:
-		remove_quote(line[:-1]) # line[:-1] for removing the end '\n' symbol
-		# print()
-#	print(content)
+
+	content = remove_quote(pos_data)
+
 	with open('%s_pre.txt' % tag, 'w') as f:
 		for line in content:
 			f.writelines(line + "\n")
 
-content = []
 tag = sys.argv[1]
 processing()
 
