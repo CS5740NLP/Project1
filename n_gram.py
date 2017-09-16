@@ -26,10 +26,11 @@ def gram(string):
         pre_word = word
         
     # calculate uni probabiliy
+    length = len([word for word in words if word != "</s>"])
     uni_word = uni_cnt.keys() 
     uni_prob = []
     for word in uni_word:
-        prob = (float)(uni_cnt[word])/len(words)
+        prob = (float)(uni_cnt[word])/length
         uni_prob.append(prob)
     
     # calculate bi probability
