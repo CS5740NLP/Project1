@@ -7,14 +7,18 @@ import numpy as np
 # Return gram list and corresponding probabiliy.
 
 def gram(string):
-    # count uni bi words
+    # count uni bi tri words
     words = string.split()
-    uni_cnt = {}; bi_cnt = {}; 
+    uni_cnt = {}; bi_cnt = {}; tri_cnt = {}
     pre_word = words[0]
+    pre_word2 = words[1]
     uni_cnt[pre_word] = 1
-    for word in words[1:]:
+    uni_cnt[pre_word2] = 1
+    bi_cnt[(pre_word,pre_word2)]=1
+    for word in words[2:]:
         uni = word
-        bi = (pre_word,word)
+        bi = (pre_word2,word)
+        tri = (pre_word,pre_word2,word)
         
         if uni in uni_cnt: 
             uni_cnt[uni] += 1
@@ -23,7 +27,13 @@ def gram(string):
         if bi in bi_cnt:
             bi_cnt[bi] += 1
         else: bi_cnt[bi] = 1
-        pre_word = word
+       
+        if tri in tri_cnt :
+            tri_cnt[tri] += 1           
+        else:            
+            tri_cnt[tri] =1
+        pre_word = pre_word2
+        pre_word2 = word
         
     # calculate uni probabiliy
     length = len([word for word in words if word != "</s>"])
@@ -46,8 +56,23 @@ def gram(string):
         elif type(bi_word[pre])==list and type(bi_prob[pre])==list:
             bi_word[pre].append(w)
             bi_prob[pre].append(prob)
-            
-    return uni_word,uni_prob,bi_word,bi_prob
+  
+   # calculate tri probablity
+    tri_word = {}
+    tri_prob = {}
+    for word in tri_cnt:        
+        pre = (word[0], word[1])
+        w = word[2]
+        prob = (float)(tri_cnt[word])/bi_cnt[(pre)]
+        if pre not in tri_word:
+            tri_word[pre] = [w]
+            tri_prob[pre] = [prob]
+        elif type(tri_word[pre])==list and type(tri_prob[pre])==list:
+            tri_word[pre].append(w)
+            tri_prob[pre].append(prob)
+        
+    
+    return length,uni_word,uni_prob,bi_word,bi_prob,tri_word,tri_prob
 
 
 
