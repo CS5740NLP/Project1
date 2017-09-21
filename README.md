@@ -14,6 +14,13 @@ You can change uni to bi for bigram, and `'</s>'` to other words like `'I'` to s
 Please make run do_glove.py right outside the folder SentimentDataset!
 1. db.pkl: pickle file to store pre-trained word embeddings. (Not shown here due to large size of this file)
 2. do_glove.py : This file is to preprocess our review set and produce averaged word representation for each review entry.
-Run Python file directly without any needed parameter. It outputs eight file (5 csv files and 3 text files). 
-All the csv files can be identified their function meaning by the name, such as `Glove_840B_Train_feature.csv` means collections of averaged word representations of each review entry from `pos.txt` and `neg.txt` of Train folder. 
-`Glove_Train_not_here.txt` records all the missing words which are in our review data while not in pretrained word embedding dataset.
+
+  - Run Python file directly without any needed parameter. It outputs eight file (5 csv files and 3 text files). 
+  
+  - All the csv files can be identified their function meaning by the name, such as `Glove_840B_Train_feature.csv` means collections of averaged word representations of each review entry from `pos.txt` and `neg.txt` of Train folder. 
+  
+  - `Glove_Train_not_here.txt` records all the missing words which are in our review data while not in pretrained word embedding dataset.
+   
+  - `Train_label.txt` records label for collections of averaged word representations of each review entry from `pos.txt` and `neg.txt` of Train folder. 0 means positive.
+  
+3. svm_modeling.py : machine learning pruning and modeling.
