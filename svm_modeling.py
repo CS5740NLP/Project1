@@ -16,8 +16,6 @@ for c in C:
 	print ("%f" % c, trn_accu, tst_accu)
 
 """ train model """
-trn_feature = np.concatenate((trn_feature, dev_feature), axis=0)
-trn_label = np.concatenate((trn_label, dev_label), axis=0)
 test_feature  = np.genfromtxt('glove_840B_Test_feature.csv',delimiter=',')
 clf = svm.SVC(C = 0.84, kernel = 'linear', random_state = None)
 clf.fit(trn_feature, trn_label)  
