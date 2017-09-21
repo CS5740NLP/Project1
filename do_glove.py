@@ -107,6 +107,13 @@ def get_vector():
 		reviews, pos_len = remove_quote(tag, 'pos')
 		neg_review, neg_len = remove_quote(tag, 'neg')
 		reviews.extend(neg_review)
+		label = [0] * pos_len
+		label.extend([1 for x in range(neg_len)])
+		""" write label csv file """
+		with open('%s_feature.csv' % tag, 'w' ) as f:
+			wtr = csv.writer(f, delimiter=",")
+			for i in label:
+				wtr.writerow([i])
 
 		do_embedding(tag, reviews)
 
