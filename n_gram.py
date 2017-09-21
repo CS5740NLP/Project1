@@ -72,7 +72,7 @@ def gram(string):
             tri_prob[pre].append(prob)
         
     
-    return length,uni_word,uni_prob,bi_word,bi_prob,tri_word,tri_prob
+    return length,uni_word,uni_cnt,uni_prob,bi_word,bi_cnt,bi_prob,tri_word,tri_cnt,tri_prob
 
 
 

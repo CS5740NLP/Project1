@@ -12,7 +12,7 @@ if __name__ ==  '__main__':
     file_str = file_str.replace('\n',' ')
 
     # construct model
-    length,uni_word,uni_prob,bi_word,bi_prob,tri_word,tri_prob= gram(file_str)
+    length,uni_word,uni_cnt,uni_prob,bi_word,bi_cnt,bi_prob,tri_word,tri_cnt,tri_prob= gram(file_str)
     model = sys.argv[2]
     num = (int)(sys.argv[3])
     given_sentence = sys.argv[4]
