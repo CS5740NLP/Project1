@@ -110,7 +110,7 @@ def get_vector():
 		label = [0] * pos_len
 		label.extend([1 for x in range(neg_len)])
 		""" write label csv file """
-		with open('%s_feature.csv' % tag, 'w' ) as f:
+		with open('%s_label.csv' % tag, 'w' ) as f:
 			wtr = csv.writer(f, delimiter=",")
 			for i in label:
 				wtr.writerow([i])
