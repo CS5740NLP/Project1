@@ -37,7 +37,7 @@ def gram(string):
         
     # calculate uni probabiliy
     length = len([word for word in words if word != "</s>"])
-    uni_word = uni_cnt.keys() 
+    uni_word = [word for word in uni_cnt.keys() if word != "</s>"]
     uni_prob = []
     for word in uni_word:
         prob = (float)(uni_cnt[word])/length
